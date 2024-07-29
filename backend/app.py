@@ -62,34 +62,41 @@ async def enroll_finger(sus):
 
         if positionNumber >= 0:
             print("Template already exists at position #" + str(positionNumber))
-            await socket_manager.send(
-                "Template already exists at position #" + str(positionNumber)
-            )
+            await socket_manager.send("existed")
             return
 
         print("Remove finger...")
-        await socket_manager.send("Remove finger...")
-    except:
+        await socket_manager.send("remove_finger")
+    except Exception as e:
+        print(e)
         print("Error while enrolling fingerprint")
-        await socket_manager.send("Error while enrolling fingerprint")
+        await socket_manager.send("error")
 
 
 async def compareFinger(sus):
-    while f.readImage() == False:
-        pass
+   try:
+        while f.readImage() == False:
+            pass
 
-    f.convertImage(FINGERPRINT_CHARBUFFER2)
+        print("nice")
 
-    if f.compareCharacteristics() == 0:
-        await socket_manager.send("Fingers do not match")
-        return
+        f.convertImage(FINGERPRINT_CHARBUFFER2)
 
-    f.createTemplate()
+        if f.compareCharacteristics() == 0:
+            await socket_manager.send("not_match")
+            return
 
-    positionNumber = f.storeTemplate()
-    print("Finger enrolled successfully!")
-    print("New template position #" + str(positionNumber))
-    await socket_manager.send("Finger enrolled successfully!")
+        f.createTemplate()
+
+        positionNumber = f.storeTemplate()
+        print("Finger enrolled successfully!")
+        print("New template position #" + str(positionNumber))
+        await socket_manager.send("enroll_success:" + str(positionNumber))
+   except Exception as e:
+        print(e)
+        print("Error while comparing fingerprint")
+        await socket_manager.send("error")
+        
 
 
 async def deleteFinger(sus, finger):
@@ -113,6 +120,13 @@ async def listFingerprints():
     tableIndex = f.getTemplateIndex(0)
 
     return tableIndex
+
+@app.delete("/fingerprints/{finger}")
+async def deleteFinger(finger: int):
+    if f.deleteTemplate(finger) == True:
+        return "success"
+    else:
+        return "failed"
 
 
 socket_manager.mount_to("/socket.io", app)
