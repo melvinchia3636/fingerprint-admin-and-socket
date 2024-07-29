@@ -51,7 +51,6 @@ async def handle_search_fingerprint(sus):
 
 async def enroll_finger(sus):
     try:
-        print("sus")
         while f.readImage() == False:
             pass
 
@@ -77,8 +76,6 @@ async def compareFinger(sus):
    try:
         while f.readImage() == False:
             pass
-
-        print("nice")
 
         f.convertImage(FINGERPRINT_CHARBUFFER2)
 
