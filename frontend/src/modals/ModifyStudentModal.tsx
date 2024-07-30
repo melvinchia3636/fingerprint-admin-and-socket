@@ -1,10 +1,10 @@
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useEffect, useState } from "react";
-import Input from "./Input";
+import Input from "../Input";
 import EnrollFingerprintModal from "./EnrollFingerprintModal";
 import { doc, setDoc } from "firebase/firestore";
-import { firestore } from "./firebase.config";
+import { firestore } from "../firebase.config";
 
 function AddStudentModal({
   openType: openType,
@@ -32,6 +32,7 @@ function AddStudentModal({
       name_en: nameEN,
       class: classId,
       seat_no: seatNo,
+      id: studentID,
       fingerprint: fingerprintSerial,
     });
 

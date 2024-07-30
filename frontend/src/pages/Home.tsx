@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { firestore } from "./firebase.config";
+import { firestore } from "../firebase.config";
 import { collection } from "firebase/firestore";
-import AddStudentModal from "./ModifyStudentModal";
+import AddStudentModal from "../modals/ModifyStudentModal";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import DeleteStudentConfirmationModal from "./DeleteStudentConfirmationModal";
+import DeleteStudentConfirmationModal from "../modals/DeleteStudentConfirmationModal";
 
 function getChineseClassName(classId: string) {
   const seniorOrJunior = classId.startsWith("S") ? "高" : "初";
@@ -76,7 +76,7 @@ function Home() {
           onClick={() => {
             setModifyStudentModalOpenType("add");
           }}
-          className="bg-blue-400 text-zinc-900 text-white font-medium px-6 py-4 flex items-center gap-4 rounded-md uppercase tracking-widest"
+          className="bg-blue-400 text-zinc-900 font-medium px-6 py-4 flex items-center gap-4 rounded-md uppercase tracking-widest"
         >
           <Icon icon="uil:plus" className="w-5 h-5" />
           <div className="flex flex-col text-left">

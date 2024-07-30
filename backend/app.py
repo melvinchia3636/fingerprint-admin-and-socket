@@ -17,36 +17,40 @@ try:
 except Exception as e:
     print("The fingerprint sensor could not be initialized!")
     print("Exception message: " + str(e))
+    exit(1)
 
 
 async def searchFinger():
-    print("sus")
-    while f.readImage() == False:
-        pass
+    try:
+        print("sus")
+        while f.readImage() == False:
+            pass
 
-    f.convertImage(FINGERPRINT_CHARBUFFER1)
+        f.convertImage(FINGERPRINT_CHARBUFFER1)
 
-    result = f.searchTemplate()
+        result = f.searchTemplate()
 
-    positionNumber = result[0]
-    accuracyScore = result[1]
+        positionNumber = result[0]
 
-    if positionNumber == -1:
-        print("No match found!")
-        await socket_manager.send("No match found!")
-    else:
-        print("Found template at position #" + str(positionNumber))
-        print("The accuracy score is: " + str(accuracyScore))
-        await socket_manager.send("Found template at position #" + str(positionNumber))
+        if positionNumber == -1:
+            print("No match found!")
+            await socket_manager.send("not_found")
+        else:
+            print("found:" + str(positionNumber))
+            await socket_manager.send("found:" + str(positionNumber))
+    except Exception as e:
+        print(e)
+        print("Error while searching for fingerprint")
+        await socket_manager.send("error")
 
 
 async def handle_search_fingerprint(sus):
     try:
         await searchFinger()
-
-    except:
+    except Exception as e:
+        print(e)
         print("Error while searching for fingerprint")
-        await socket_manager.send("Error while searching for fingerprint")
+        await socket_manager.send("error")
 
 
 async def enroll_finger(sus):

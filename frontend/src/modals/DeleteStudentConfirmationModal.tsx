@@ -83,7 +83,7 @@ function DeleteStudentConfirmationModal({
               onClick={() => {
                 deleteStudentInfo();
               }}
-              className="bg-red-500 hover:bg-red-600 transition-all w-full text-white px-6 py-4 rounded-md uppercase tracking-widest"
+              className="bg-red-500 flex items-center justify-center hover:bg-red-600 transition-all w-full text-white px-6 py-4 rounded-md uppercase tracking-widest"
             >
               {loading ? (
                 <Icon icon="svg-spinners:180-ring" className="w-6 h-6" />
