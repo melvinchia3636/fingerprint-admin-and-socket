@@ -30,11 +30,12 @@ function EnrollFingerprintModal({
         setIcon("tabler:fingerprint");
       }
 
-      if (data === "existed") {
+      if (data.startsWith("existed")) {
         setMessage("Fingerprint already exists");
         setMessageCH("指纹已存在");
         setIsCompleted(true);
-        setIcon("uil:exclamation-octagon");
+        setIcon("uil:exclamation-octagon··");
+        setFingerprintSerial(data.split(":")[1]);
       }
 
       if (data === "error") {

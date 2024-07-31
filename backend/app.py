@@ -65,7 +65,7 @@ async def enroll_finger(sus):
 
         if positionNumber >= 0:
             print("Template already exists at position #" + str(positionNumber))
-            await socket_manager.send("existed")
+            await socket_manager.send("existed:"+str(positionNumber))
             return
 
         print("Remove finger...")
